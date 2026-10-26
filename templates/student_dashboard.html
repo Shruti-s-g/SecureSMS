@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Student profile{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">STUDENT RECORD</span><h1>{{ student['full_name'] }}</h1><p class="muted">Profile and academic information</p></div>{% if g.user['role'] == 'admin' %}<a class="button secondary" href="{{ url_for('admin_student_attendance', student_id=student['id']) }}">Attendance report</a>{% else %}<a class="button secondary" href="{{ url_for('my_attendance') }}">My attendance report</a>{% endif %}</div>
+<section class="card profile-card">
+  <div class="avatar">{{ student['full_name'][0]|upper }}</div>
+  <div class="details">
+    <div><span>Student ID</span><strong>{{ student['id'] }}</strong></div>
+    <div><span>Roll number</span><strong>{{ student['roll_number'] }}</strong></div>
+    <div><span>Full name</span><strong>{{ student['full_name'] }}</strong></div>
+    <div><span>Username</span><strong>{{ student['username'] }}</strong></div>
+    <div><span>Email</span><strong>{{ student['email'] }}</strong></div>
+    <div><span>Course</span><strong>{{ student['course'] }}</strong></div>
+    <div><span>Year</span><strong>{{ student['year'] }}</strong></div>
+  </div>
+</section>
+{% endblock %}

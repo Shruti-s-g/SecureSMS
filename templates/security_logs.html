@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Security logs{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">SECURITY</span><h1>Security logs</h1><p class="muted">The 100 most recent failed login and blocked access events.</p></div></div>
+<section class="card table-card"><div class="table-scroll"><table>
+  <thead><tr><th>Time (UTC)</th><th>User</th><th>Event</th><th>Details</th></tr></thead>
+  <tbody>{% for log in logs %}<tr><td>{{ log['created_at'] }}</td><td>{{ log['username'] or 'Unknown' }}</td><td><span class="badge">{{ log['event_type'] }}</span></td><td>{{ log['details'] }}</td></tr>{% else %}<tr><td colspan="4">No security events yet.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% endblock %}

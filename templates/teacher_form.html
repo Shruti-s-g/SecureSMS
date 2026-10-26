@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit teacher' if teacher else 'Add teacher' }}{% endblock %}
+{% block content %}
+<div class="form-card card"><span class="eyebrow">ADMIN</span><h1>{{ 'Edit teacher' if teacher else 'Add teacher' }}</h1>
+  <p class="muted">Course must exactly match the course on student profiles (for example, Computer Science).</p>
+  <form method="post" class="form-grid"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if not teacher %}
+    <div><label for="username">Username</label><input id="username" name="username" required minlength="5" maxlength="15" value="{{ request.form.get('username', '') }}"></div>
+    <div><label for="email">Email</label><input id="email" name="email" type="email" required value="{{ request.form.get('email', '') }}"></div>
+    <div><label for="password">Password</label><input id="password" name="password" type="password" required minlength="8" autocomplete="new-password"></div>
+    {% endif %}
+    <div><label for="full_name">Full name</label><input id="full_name" name="full_name" required minlength="2" maxlength="80" value="{{ request.form.get('full_name', teacher['full_name'] if teacher else '') }}"></div>
+    <div><label for="course">Course</label><input id="course" name="course" required minlength="2" maxlength="80" value="{{ request.form.get('course', teacher['course'] if teacher else '') }}"></div>
+    <div><label for="subject">Subject</label><input id="subject" name="subject" required minlength="2" maxlength="80" value="{{ request.form.get('subject', teacher['subject'] if teacher else '') }}"></div>
+    <div class="form-actions"><button class="button" type="submit">{{ 'Save changes' if teacher else 'Add teacher' }}</button><a href="{{ url_for('admin_teachers') }}">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}

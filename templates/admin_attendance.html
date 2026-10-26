@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Attendance overview{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">ADMIN DASHBOARD</span><h1>Attendance overview</h1><p class="muted">Open a student's report to see dates, subjects, and teacher names.</p></div></div>
+<section class="card table-card"><div class="table-scroll"><table>
+  <thead><tr><th>Roll number</th><th>Student</th><th>Course</th><th>Present</th><th>Total marked</th><th>Attendance</th><th>Report</th></tr></thead>
+  <tbody>{% for student in students %}<tr><td>{{ student['roll_number'] }}</td><td>{{ student['full_name'] }}</td><td>{{ student['course'] }}</td><td>{{ student['present'] }}</td><td>{{ student['total'] }}</td><td>{{ ((student['present'] / student['total']) * 100)|round(1) if student['total'] else '—' }}{% if student['total'] %}%{% endif %}</td><td><a href="{{ url_for('admin_student_attendance', student_id=student['id']) }}">View report</a></td></tr>{% else %}<tr><td colspan="7">No students yet.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% endblock %}

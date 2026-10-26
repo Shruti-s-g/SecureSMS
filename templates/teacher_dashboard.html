@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Mark attendance{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">TEACHER DASHBOARD</span><h1>Mark attendance</h1><p class="muted">{{ teacher['full_name'] }} · {{ teacher['subject'] }} · {{ teacher['course'] }}</p></div></div>
+<section class="card date-filter"><form method="get"><label for="day">Attendance date</label><input id="day" name="day" type="date" value="{{ day }}" max="{{ today }}" required><button class="button secondary" type="submit">Show date</button></form><p class="muted">You can mark or correct attendance for today or an earlier date.</p></section>
+<section class="card table-card"><div class="table-scroll"><table>
+  <thead><tr><th>Roll number</th><th>Student</th><th>Current status</th><th>Mark status for {{ day }}</th></tr></thead>
+  <tbody>{% for student in students %}<tr>
+    <td>{{ student['roll_number'] }}</td><td>{{ student['full_name'] }}</td><td>{{ student['status'] or 'Not marked' }}</td>
+    <td class="actions">
+      <form method="post" action="{{ url_for('mark_attendance', student_id=student['id']) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="day" value="{{ day }}"><input type="hidden" name="status" value="Present"><button class="button small-button" type="submit">Present</button></form>
+      <form method="post" action="{{ url_for('mark_attendance', student_id=student['id']) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="day" value="{{ day }}"><input type="hidden" name="status" value="Absent"><button class="button secondary small-button" type="submit">Absent</button></form>
+    </td></tr>{% else %}<tr><td colspan="4">No students have the course “{{ teacher['course'] }}”. Check the course spelling on their profiles.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Attendance report{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">ATTENDANCE REPORT</span><h1>{{ student['full_name'] }}</h1><p class="muted">{{ student['roll_number'] }} · {{ student['course'] }}</p></div>{% if g.user['role'] == 'admin' %}<a class="button secondary" href="{{ url_for('admin_attendance') }}">All reports</a>{% else %}<a class="button secondary" href="{{ url_for('student_dashboard') }}">My profile</a>{% endif %}</div>
+<div class="stat-card card"><span>Present / marked</span><strong>{{ present }} / {{ records|length }}</strong><span>{{ ((present / (records|length)) * 100)|round(1) if records else '—' }}{% if records %}% attendance{% else %} No attendance marked yet{% endif %}</span></div>
+<section class="card table-card"><div class="table-scroll"><table>
+  <thead><tr><th>Date</th><th>Subject</th><th>Teacher</th><th>Status</th></tr></thead>
+  <tbody>{% for record in records %}<tr><td>{{ record['attendance_date'] }}</td><td>{{ record['subject'] }}</td><td>{{ record['teacher_name'] }}</td><td><span class="badge {{ 'present' if record['status'] == 'Present' else 'absent' }}">{{ record['status'] }}</span></td></tr>{% else %}<tr><td colspan="4">No attendance has been marked for this student yet.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+<p class="muted report-note">Percentage is calculated from marked attendance entries only; unmarked dates are excluded.</p>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="form-card card">
+  <span class="eyebrow">STUDENT ACCESS</span>
+  <h1>Create your account</h1>
+  <p class="muted">Registration always creates a student account.</p>
+  <form method="post" class="form-grid">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div><label for="username">Username</label><input id="username" name="username" required minlength="5" maxlength="15" pattern="[A-Za-z0-9_]{5,15}" value="{{ request.form.get('username', '') }}"></div>
+    <div><label for="email">Email</label><input id="email" name="email" type="email" required maxlength="254" value="{{ request.form.get('email', '') }}"></div>
+    <div><label for="password">Password</label><input id="password" name="password" type="password" required minlength="8" autocomplete="new-password"><small>At least 8 characters</small></div>
+    <div><label for="full_name">Full name</label><input id="full_name" name="full_name" required minlength="2" maxlength="80" value="{{ request.form.get('full_name', '') }}"></div>
+    <div><label for="roll_number">Roll number</label><input id="roll_number" name="roll_number" required minlength="2" maxlength="30" value="{{ request.form.get('roll_number', '') }}"></div>
+    <div><label for="course">Course</label><input id="course" name="course" required minlength="2" maxlength="80" value="{{ request.form.get('course', '') }}"></div>
+    <div><label for="year">Year (1–8)</label><input id="year" name="year" type="number" min="1" max="8" required value="{{ request.form.get('year', '') }}"></div>
+    <div class="form-actions"><button class="button" type="submit">Register</button> <a href="{{ url_for('login') }}">Already have an account?</a></div>
+  </form>
+</div>
+{% endblock %}

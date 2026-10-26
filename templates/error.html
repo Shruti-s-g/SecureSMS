@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}<section class="card error-card"><span class="eyebrow">REQUEST STOPPED</span><h1>{{ title }}</h1><p>{{ message }}</p><a class="button" href="{{ url_for('index') }}">Go to dashboard</a></section>{% endblock %}

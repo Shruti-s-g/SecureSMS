@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Student Management{% endblock %} | SecureSMS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('index') }}">Secure<span>SMS</span></a>
+      <nav aria-label="Main navigation">
+        {% if g.user %}
+          {% if g.user['role'] == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}">Students</a>
+            <a href="{{ url_for('admin_teachers') }}">Teachers</a>
+            <a href="{{ url_for('admin_attendance') }}">Attendance</a>
+            <a href="{{ url_for('security_logs') }}">Security logs</a>
+          {% elif g.user['role'] == 'teacher' %}
+            <a href="{{ url_for('teacher_dashboard') }}">Mark attendance</a>
+          {% else %}
+            <a href="{{ url_for('student_dashboard') }}">My profile</a>
+            <a href="{{ url_for('my_attendance') }}">My attendance</a>
+          {% endif %}
+          <span class="nav-user">{{ g.user['username'] }} · {{ g.user['role'] }}</span>
+          <form class="inline-form" method="post" action="{{ url_for('logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="nav-button" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('login') }}">Log in</a>
+          <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Secure Student Management System · Student project</footer>
+</body>
+</html>
