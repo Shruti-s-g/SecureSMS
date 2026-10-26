@@ -14,7 +14,7 @@ python -m flask --app app create-admin
 python app.py
 ```
 
-Open http://127.0.0.1:5000. The `create-admin` command asks for a username, email, and password; password input stays hidden. To stop the server, press Ctrl+C.
+Open http://127.0.0.1:5001. The `create-admin` command asks for a username, email, and password; password input stays hidden. To stop the server, press Ctrl+C.
 
 If PowerShell blocks the activation script, use `.venv\Scripts\python.exe` instead of `python` for the remaining commands; for the Flask commands use `.venv\Scripts\python.exe -m flask ...`.
 
