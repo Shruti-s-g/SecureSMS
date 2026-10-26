@@ -45,3 +45,5 @@ The database and the generated session secret are stored in `instance/`, which i
 4. As admin, open **Attendance** to see the overview and individual reports. An unmarked date is excluded from the percentage.
 
 Teacher access is restricted to students whose course exactly matches the teacher's assigned course. Students can only see their own attendance; admins can see all reports. A teacher with saved attendance cannot be deleted, preserving existing reports.
+
+https://youtu.be/bDNxLOGuG_M
